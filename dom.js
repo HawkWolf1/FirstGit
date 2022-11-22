@@ -11,7 +11,7 @@ console.log(document.links);
 console.log(document.images);
 
 console.log(document.getElementById('header-title'))      */
-var headerTitle = document.getElementById('header-title')
+/* var headerTitle = document.getElementById('header-title')
 
 headerTitle.style.borderTop = 'solid 3px #000'
 headerTitle.style.borderRight = 'solid 3px #000'
@@ -44,8 +44,19 @@ li[1].style.backgroundColor = 'yellow'
 
 for (var i=0; i<items.length; i++){
     li[i].style.backgroundColor = 'red'
+}*/
+
+
+/* var secondItem = document.querySelector('.list-group-item:nth-child(2)');
+secondItem.style.backgroundColor = 'green';
+
+var thirdItem = document.querySelector('.list-group-item:nth-child(3)');
+thirdItem.style.color = 'white'; */
+
+var odd = document.querySelectorAll('li:nth-child(odd)');
+var even = document.querySelectorAll('li:nth-child(even)');
+
+for (var i=0; i<odd.length; i++){
+    odd[i].style.backgroundColor = 'green' 
+    even[i].style.color = 'green' 
 }
-
-
-
-
