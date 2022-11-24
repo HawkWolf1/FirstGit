@@ -15,8 +15,9 @@ function addItem(e){
 
   // Get input value
   var newItem = document.getElementById('item').value;
-  var ddocument = document.getElementById('description').value;
-  li.appendChild(document.createTextNode(ddocument));
+  var newdocument = document.getElementById('description').value;
+  
+  
 
   // Create new li element
   var li = document.createElement('li');
@@ -24,6 +25,10 @@ function addItem(e){
   li.className = 'list-group-item';
   // Add text node with input value
   li.appendChild(document.createTextNode(newItem));
+
+  
+  const descriptionNode = document.createTextNode('newdocument');
+  li.appendChild(document.createTextNode(newdocument));
 
   // Create del button element
   var deleteBtn = document.createElement('button');
@@ -60,7 +65,8 @@ function filterItems(e){
   // Convert to an array
   Array.from(items).forEach(function(item){
     var itemName = item.firstChild.textContent;
-    if(itemName.toLowerCase().indexOf(text) != -1){
+    var newdocument = item.childNodes[1].textContent;
+    if(itemName.toLowerCase().indexOf(text) != -1  || newdocument.toLowerCase().indexOf(text) != -1 ){
       item.style.display = 'block';
     } else {
       item.style.display = 'none';
