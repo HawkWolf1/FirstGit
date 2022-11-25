@@ -18,6 +18,14 @@
         localStorage.setItem('username', xxxxx);
         localStorage.setItem('EmailID', yyyyy);
         localStorage.setItem('phonenumber', zzzzz);
+
+        let myObj={
+          name: xxxxx,
+          email: yyyyy,
+          phone: zzzzz,
+        }
+        let myObj_serialized = JSON.stringify(myObj);
+        localStorage.setItem('myobj',myObj_serialized)
       }
     </script>
   </body>
