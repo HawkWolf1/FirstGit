@@ -1,12 +1,12 @@
 <html>
   <body>
     <form onsubmit="saveToLocalStoragevent(event)">
-      <label> Name</label>
-      <input type="text" name="username" required/><br>
-      <label> EmailID</label>
-      <input type="email" name="emailId" required/><br>
-      <label> Phone number</label>
-      <input type="tel" name="phonenumber" required/><br>
+      <label> username</label>
+      <input id='username' type="text" name="username" required/><br>
+      <label> EmailId</label>
+      <input id='email' type="email" name="emailId" required/><br>
+      <label> phonenumber</label>
+      <input id='phonenumber' type="tel" name="phonenumber" required/><br>
       <button> Submit </button>
     </form>
     <ul id="listOfUsers"></ul>
@@ -31,9 +31,31 @@
       }
       function showNewUserOnScreen(user){
         const parentNode = document.getElementById('listOfUsers');
-        const childHTML = `<li> ${user.xxxxx} -${user.yyyyy} </li>`
+        const childHTML = `<li id=${user.xxxxx}> ${user.xxxxx} -${user.yyyyy} 
+                           <button onClick=deleteUser('${user.yyyyy}')> Delete User </button>
+                           <button onClick=editUserDetails('${user.yyyyy}','${user.yyyyy}','${user.zzzzz}')> Edit User </button>
+          
+          </li>`
         parentNode.innerHTML =parentNode.innerHTML+ childHTML 
+        
 
+      }
+      function editUserDetails(username, emailId, phonenumber){
+        document.getElementById('username').value = username
+        document.getElementById('email').value = emailId
+        document.getElementById('phonenumber').value = phonenumber
+        deleteUser(emailId)
+      }
+
+      function deleteUser(emailId){
+        console.log(emailId)
+        localStorage.removeItem(emailId)
+        removeUserFromScreen(emailId)
+      }
+      function removeUserFromScreen(emailId){
+        const parentNode=document.getElementById('listOfUsers')
+        const childNodeToBeDeleted = document.getElementById(emailId)
+        parentNode.removeChild(childNodeToBeDeleted)
       }
     </script>
   </body>
