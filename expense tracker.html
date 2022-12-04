@@ -1,0 +1,74 @@
+<html>
+  <body>
+    <form onsubmit="saveToLocalStoragevent(event)">
+
+      <label>Choose Expense Amount</label>
+      <input id='Choose Expense Amount' type="text" name="Choose_Expense_Amount" required/><br>
+
+      <label>Choose Description</label>
+      <input id='Choose Description' type="text" name="Choose_Description" required/><br>
+
+      
+
+      <label for="category"> Choose Category </label>
+<select name = 'Choose_Category' id="category">
+    <option value="fuel">fuel</option>
+    <option value="Movie">Movie</option>
+    <option value="On Vacation">On Vacation</option>
+    <option value="Misc">Misc</option>
+</select><br>
+
+<button> Submit </button>
+
+    </form>
+    <ul id="listOfUsers"></ul>
+    <script>
+      function saveToLocalStoragevent(event){
+        event.preventDefault();
+        const xxxxx= event.target.Choose_Expense_Amount.value;
+        const yyyyy = event.target.Choose_Description.value;
+        const zzzzz = event.target.Choose_Category.value;
+        //localStorage.setItem('username', xxxxx);
+        //localStorage.setItem('EmailID', yyyyy);
+        //localStorage.setItem('phonenumber', zzzzz);
+
+        let myObj={
+          xxxxx,
+          yyyyy,
+          zzzzz,
+        }
+        let myObj_serialized = JSON.stringify(myObj);
+        localStorage.setItem(myObj.yyyyy ,myObj_serialized)
+        showNewUserOnScreen(myObj)
+      }
+      function showNewUserOnScreen(user){
+        const parentNode = document.getElementById('listOfUsers');
+        const childHTML = `<li id=${user.xxxxx}> ${user.xxxxx} -${user.yyyyy} 
+                           <button onClick=deleteUser('${user.yyyyy}')> Delete Expense </button>
+                           <button onClick=editUserDetails('${user.yyyyy}','${user.yyyyy}','${user.zzzzz}')> Edit Expense </button>
+          
+          </li>`
+        parentNode.innerHTML =parentNode.innerHTML+ childHTML 
+        
+
+      }
+      function editUserDetails(username, emailId, phonenumber){
+        document.getElementById('username').value = username
+        document.getElementById('email').value = emailId
+        document.getElementById('phonenumber').value = phonenumber
+        deleteUser(emailId)
+      }
+
+      function deleteUser(emailId){
+        console.log(emailId)
+        localStorage.removeItem(emailId)
+        removeUserFromScreen(emailId)
+      }
+      function removeUserFromScreen(emailId){
+        const parentNode=document.getElementById('listOfUsers')
+        const childNodeToBeDeleted = document.getElementById(emailId)
+        parentNode.removeChild(childNodeToBeDeleted)
+      }
+    </script>
+  </body>
+</html>
