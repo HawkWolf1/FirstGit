@@ -21,4 +21,6 @@ preMovie().then((m) => console.log(`person3: shows ${m}`))
 
 
 console.log('person4: shows ticket')
+
+
 console.log('person5: shows ticket')
