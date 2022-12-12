@@ -51,6 +51,29 @@
         //localStorage.setItem(myObj.yyyyy ,myObj_serialized)
         //showNewUserOnScreen(myObj)
       }
+       window.addEventListener("DOMContentLoaded", () => {
+        axios.get("https://crudcrud.com/api/bbcbc2f0179a4906b9e588c4736aa210/appointementData/")
+        .then(response) =>{
+            console.log(response)
+            for(var i=0; i<response.data.length; i++){
+                showNewUserOnScreen(response.data[i])
+            }
+        }
+        .catch(error) =>{
+            console.log(error)
+        }
+        const localStorageObj = localStorage
+        const localStoragekeys = Object.keys(localStorageObj)
+
+        for (var i=0; i<localStoragekeys.length; i++){
+            const key = localStoragekeys[i]
+            const UserDetailsString = localStorageObj[key]
+            const UserDetailsObj = JSON.parse(UserDetailsString)
+            showNewUserOnScreen(UserDetailsObj)
+        }
+
+       })
+
       function showNewUserOnScreen(user){
         const parentNode = document.getElementById('listOfUsers');
         const childHTML = `<li id=${user.xxxxx}> ${user.xxxxx} -${user.yyyyy} 
