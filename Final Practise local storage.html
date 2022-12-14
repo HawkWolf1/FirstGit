@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <style>
+            h3{text-align: center;}
+            p{text-align: center;}
+
+        </style>
+        <h3> EXPENSE TRACKER </h3>
+        <body>
+
+        <form onsubmit="saveToLocalStorage(event)">
+        <p> <label>CHOOSE EXPENSE AMOUNT</label>
+            <input id="expense amount" type="number" name="expense_amount" size="50" ><br>
+
+            <label> CHOOSE DESCRIPTION</label>
+            <input id="choose description" type="text" name="choose_description" size="50" ><br>
+
+            <label> CHOOSE CATEGORY </label>
+            <select name="choose_category" id="choose_category">
+                <option value = 'fuel'>fuel</option>
+                <option value = 'food'>food</option>
+                <option value = 'vacation'>vacation</option>
+                <option value = 'shopping'>shopping</option>
+            </select>
+
+            <button> SUBMIT </button>
+        </form>
+        </p>
+        <ul id="listOfUsers"> </ul>
+            <script>
+                function saveToLocalStorage(event){
+                    event.preventDefault()
+                    const amount = event.target.expense_amount.value
+                    const description = event.target.choose_description.value
+                    const category = event.target.choose_category.value
+
+                    // localStorage.setItem('expense_amount', amount)
+                    // localStorage.setItem('choose_description', description)
+                    // localStorage.setItem('choose_category', category)
+
+                    const myObject = {
+                        amount,
+                        description,
+                        category
+                    }
+                    localStorage.setItem(myObject.description, JSON.stringify(myObject))
+
+                    showNewUserOnScreen(myObject)
+
+                }
+                window.addEventListener("DOMContentLoaded", ()=> {
+                    const localStorageObj = localStorage
+                    const localStorageKeys = Object.keys(localStorageObj)
+
+                    for(var i=0; i<localStorageKeys.length; i++){
+                        const key = localStorageKeys[i]
+                        const UserDetailsString = localStorageObj[key]
+                        const userDetailsObj = JSON.parse(UserDetailsString)
+                        showNewUserOnScreen(userDetailsObj)
+                    }
+                })
+
+
+
+                function showNewUserOnScreen(user){
+                    const parentNode= document.getElementById('listOfUsers')
+                    const childHTML = `<li id=${user.description}> ${user.amount} - ${user.description} 
+                                        <button onclick =deleteExpense('${user.description}')> Delete Expense </button>  
+                                        <button onclick =editExpense('${user.description}','${user.amount}','${user.category}')> Edit Expense </button>                                              
+                                        </li>`
+
+                    parentNode.innerHTML = parentNode.innerHTML + childHTML
+                }
+                function editExpense(choose_description, expense_amount, choose_category){
+                    document.getElementById('choose description').value = choose_description
+                    document.getElementById('expense amount').value = expense_amount
+                    document.getElementById('choose category').value = choose_category
+
+                    deleteExpense(choose_description)
+                }
+                function deleteExpense(choose_description){
+                    console.log(choose_description)
+                    localStorage.removeItem(choose_description)
+                    removeUserFromScreen(choose_description)
+                }
+                function removeUserFromScreen(choose_description){
+                    const parentNode = document.getElementById('listOfUsers')
+                    const childNodeToBeDeleted = document.getElementById(choose_description)
+
+                    parentNode.removeChild(childNodeToBeDeleted)
+                }
+                
+                    
+                
+             </script>
+        
+        </body>
+    </head>
+</html>
