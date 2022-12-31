@@ -8,8 +8,12 @@
         <h3> EXPENSE TRACKER </h3>
         <body>
 
-        <form onsubmit="saveToLocalStorage(event)">
-        <p> <label>CHOOSE EXPENSE AMOUNT</label>
+
+            <!-- storing the data onto the local storage    -->
+        <form onsubmit="saveToLocalStorage(event)"> 
+
+            <!-- creating various labels for the page -->
+        <p> <label>CHOOSE EXPENSE AMOUNT</label>            
             <input id="expense amount" type="number" name="expense_amount" size="50" ><br>
 
             <label> CHOOSE DESCRIPTION</label>
@@ -26,28 +30,42 @@
             <button> SUBMIT </button>
         </form>
         </p>
-        <ul id="listOfUsers"> </ul>
+        <!-- here we have created the parent node which will take the li tags later -->
+        <ul id="listOfUsers"> </ul> 
             <script>
+                // defining function for localStorage
                 function saveToLocalStorage(event){
-                    event.preventDefault()
+                    event.preventDefault() /* preventing the unnecessary reloading while submitting(which is the default behaviour) */
+
+                    // defining the variables
                     const amount = event.target.expense_amount.value
                     const description = event.target.choose_description.value
                     const category = event.target.choose_category.value
-
+                    
+                    // (setting the values in the loca lstorage using key value pairs)
                     // localStorage.setItem('expense_amount', amount)
                     // localStorage.setItem('choose_description', description)
                     // localStorage.setItem('choose_category', category)
-
+                    
+                    /* previously, we had defining key value pairs for each of the labels,
+                    now we are elminiating that by using a single variable with all the parameters*/ 
+                    
                     const myObject = {
                         amount,
                         description,
                         category
                     }
-                    localStorage.setItem(myObject.description, JSON.stringify(myObject))
+                    // we have to convert our object into string, so that we can store it.
 
+                    // now we have to make the key unique, so that we can make each and every entry.
+                    // so here we have taken .description to be unique.
+                    localStorage.setItem(myObject.description, JSON.stringify(myObject))
+                    
+                    // this function will later take on the li tags
                     showNewUserOnScreen(myObject)
 
                 }
+                // iterate through everything and show everything on the screen
                 window.addEventListener("DOMContentLoaded", ()=> {
                     const localStorageObj = localStorage
                     const localStorageKeys = Object.keys(localStorageObj)
@@ -61,9 +79,10 @@
                 })
 
 
-
+                // creating the parent node and child nodes
                 function showNewUserOnScreen(user){
                     const parentNode= document.getElementById('listOfUsers')
+                    // we use $ sign when we have to pass the variables.
                     const childHTML = `<li id=${user.description}> ${user.amount} - ${user.description} 
                                         <button onclick =deleteExpense('${user.description}')> Delete Expense </button>  
                                         <button onclick =editExpense('${user.description}','${user.amount}','${user.category}')> Edit Expense </button>                                              
