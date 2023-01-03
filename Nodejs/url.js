@@ -2,14 +2,15 @@ const http = require('http');
 const port = 4000;
 
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method, req.headers)
-    if (req.url=== '/home'){
+    if (req.url== '/home'){
         res.write('Welcome Home')
-    }else if ('localhost:4000/about'){
+        res.end()
+    }else if (req.url== '/about'){
         res.write('Welcome to about us page')
-    }else if ('localhost:4000/node'){
+        res.end()
+    }else if (req.url== '/node'){
         res.write('Welcome to my nodeJs project')
-    res.end()
+        res.end()
     }
 })
 
