@@ -1,10 +1,10 @@
 const http = require('http');
 
-const routes = require('./routes')
+const routes = require('./DONT_USE_routes')
 
 const port = 4000
 
-const server = http.createServer(routes) 
+const server = http.createServer(routes.handler) 
 
 server.listen(port, function(error){
     if (error){

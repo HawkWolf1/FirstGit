@@ -1,0 +1,21 @@
+{
+  "name": "gitstart",
+  "version": "1.0.0",
+  "description": "Learning nodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node route1.js",
+    "start-server": "node route1.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HawkWolf1/FirstGit.git"
+  },
+  "author": "Avinash Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HawkWolf1/FirstGit/issues"
+  },
+  "homepage": "https://github.com/HawkWolf1/FirstGit#readme"
+}
