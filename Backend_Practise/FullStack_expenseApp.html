@@ -48,7 +48,7 @@
                     }
                     // localStorage.setItem(myObject.description, JSON.stringify(myObject))
                     try{
-                        const abc = await axios.post("https://crudcrud.com/api/66a5c6bff96e4219a5dc0c20c20d5011/appointmentData", myObject)
+                        const abc = await axios.post("http://localhost:4000/user/add-user", myObject)
                         showNewUserOnScreen(abc.data)
                     }
                         // .then((response) => {
@@ -69,7 +69,7 @@
                 window.addEventListener("DOMContentLoaded", async(event) => {
                     event.preventDefault()
                     try{
-                    const xyz = await axios.get("https://crudcrud.com/api/66a5c6bff96e4219a5dc0c20c20d5011/appointmentData")
+                    const xyz = await axios.get("http://localhost:4000/user/add-user")
                     console.log(xyz)
                     for(var i=0; i<xyz.data.length; i++){
                              showNewUserOnScreen(xyz.data[i])
@@ -133,7 +133,7 @@
                     deleteExpense(userId)
                 }
                 async function deleteExpense(userId){
-                    try {const pqr = await axios.delete(`https://crudcrud.com/api/66a5c6bff96e4219a5dc0c20c20d5011/appointmentData/${userId}`)
+                    try {const pqr = await axios.delete(`http://localhost:4000/user/delete-user/${userId}`)
                     removeUserFromScreen(userId)
                     }
                     catch(err){
