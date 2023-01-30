@@ -31,15 +31,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
 
             <script>
-                function saveToLocalStorage(event){
+                async function saveToLocalStorage(event){
                     event.preventDefault()
-                    const amount = event.target.expense_amount.value
-                    const description = event.target.choose_description.value
-                    const category = event.target.choose_category.value
+                    const amount = document.getElementById('expense amount').value
+                    const description = document.getElementById('choose description').value
+                    const category = document.getElementById('choose category').value
 
-                    localStorage.setItem('expense_amount', amount)
-                    localStorage.setItem('choose_description', description)
-                    localStorage.setItem('choose_category', category)
+                    // localStorage.setItem('expense_amount', amount)
+                    // localStorage.setItem('choose_description', description)
+                    // localStorage.setItem('choose_category', category)
 
                     const myObject = {
                         amount,
@@ -47,32 +47,53 @@
                         category
                     }
                     // localStorage.setItem(myObject.description, JSON.stringify(myObject))
-                    axios.post("https://crudcrud.com/api/f671f7420dcd43e4b51d756008c72140/appointmentData", myObject)
-                    .then((response) => {
-                        showNewUserOnScreen(response.data)
-                        // console.log(response)
-                    })
-                    .catch((err) => {
-                        document.body.innerHTML = document.body.innerHTML
-                        console.log(err)
-                    })
+                    try{
+                        const abc = await axios.post("https://localhost:4000/user/add-user", myObject)
+                        showNewUserOnScreen(abc.data)
+                    }
+                        // .then((response) => {
+                    //     showNewUserOnScreen(response.data)
+                    //     // console.log(response)
+                    // })
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
+                    // catch((err) => {
+                    //     document.body.innerHTML = document.body.innerHTML
+                    //     console.log(err)
+                    // })
 
                     // showNewUserOnScreen(myObject)
 
                 }
-                window.addEventListener("DOMContentLoaded", ()=> {
-                    axios.get("https://crudcrud.com/api/f671f7420dcd43e4b51d756008c72140/appointmentData")
-                    .then((response) => {
-                        // console.log(response)
+                window.addEventListener("DOMContentLoaded", async(event) => {
+                    event.preventDefault()
+                    try{
+                    const xyz = await axios.get("https://localhost:4000/user/get-users")
+                    console.log(xyz)
+                    for(var i=0; i<xyz.data.length; i++){
+                             showNewUserOnScreen(xyz.data[i])
+                    }
+                }
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
+                    
+                
+                    
+                    
+                    // .then((response) => {
+                    //     // console.log(response)
 
-                        for(var i=0; i<response.data.length; i++){
-                            showNewUserOnScreen(response.data[i])
-                        }
-                    })
-                    .catch((err) =>{
-                        console.log(err)
-                    })
+                    //     for(var i=0; i<response.data.length; i++){
+                    //         showNewUserOnScreen(response.data[i])
+                    //     }
+                    // })
+                    // .catch((err) =>{
+                    //     console.log(err)
+                    // })
                 })
+                
                     // const localStorageObj = localStorage
                     // const localStorageKeys = Object.keys(localStorageObj)
 
@@ -111,15 +132,21 @@
 
                     deleteExpense(userId)
                 }
-                function deleteExpense(userId){
-                    axios.delete(`https://crudcrud.com/api/f671f7420dcd43e4b51d756008c72140/appointmentData/${userId}`)
-                    .then((response) => {
-                        removeUserFromScreen(userId)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
+                async function deleteExpense(userId){
+                    try {const pqr = await axios.delete(`"https://localhost:4000/user/delete-users"/${userId}`)
+                    removeUserFromScreen(userId)
+                    }
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
                 }
+                    // .then((response) => {
+                    //     removeUserFromScreen(userId)
+                    // })
+                    // .catch((err) => {
+                    //     console.log(err)
+                    // })
+                
                     // console.log(choose_description)
                     // localStorage.removeItem(choose_description)
                     // removeUserFromScreen(choose_description)
