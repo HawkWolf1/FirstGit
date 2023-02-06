@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
-app.post('user/add-user', async(req,res,next) => {
+app.post('/user/add-user', async(req,res,next) => {
     try{
         if(!req.body.description){
             throw new Error ('Descriptipon is required!')
