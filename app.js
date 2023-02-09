@@ -4,12 +4,17 @@ const express = require('express') // importing the express package
 
 const app = express() // express package can be used as a function
 
-app.use((req, res, next) =>{ // use allows to add a new middleware function // next is a function that is passed by this function in express js
-    console.log('A') // next allows the request to travel on next middleware
-    next()
+app.use('/', (req, res, next) =>{  
+    console.log('I will Run') 
+    next() // this always runs because we have next here.
 })
 
-app.use((req, res, next) =>{  
+app.use('/ABC', (req, res, next) =>{  
+    console.log('C') 
+    res.send('<h1> The ABC page </h1>')
+})
+
+app.use('/', (req, res, next) =>{  
     console.log('B') 
     res.send('<h1>CC</h1>')
 })
