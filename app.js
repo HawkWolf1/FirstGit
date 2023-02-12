@@ -5,9 +5,9 @@ const bodyParser = require('body-parser') // used  to parse the incoming request
 
 const app = express() // express package can be used as a function
 
-const adminRoutes = require('./routes/admin') // we are creating the route to the route folder (admin file)
+const adminRoutes = require('./approutes/admin') // we are creating the route to the route folder (admin file)
 
-const shopRoutes = require('./routes/shop')
+const shopRoutes = require('./approutes/shop')
 
 app.use(bodyParser.urlencoded({extended: false})) //It does the whole body parsing ehich would have to be manually otherwise
 
