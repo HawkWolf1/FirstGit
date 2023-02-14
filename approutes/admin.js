@@ -1,17 +1,19 @@
-// This file Handles the creation of the products
+const path = require('path')
+
 const express = require('express')
 
-const router = express.Router() // router is like a mini express app tied to another express which can be exported
+const rootDir = require('../util/path')
 
-//same path ca nbe used if method are different
-// either we can write it as /admin/mycart or we can do it as done in app.js file
+const router = express.Router() 
+
+
 router.get('/mycart', (req, res, next) =>{   
-    res.send('<form action="/admin/mycart" method="POST"><input type ="text" name="title"><button type="submit">Add product</button></form>')
+    res.sendFile(path.join(rootDir, 'myviews', 'mycart.html'))
 })
 
-router.post('/mycart', (req, res, next) =>{   //post tag is used to filter for post requests
-    console.log(req.body) //line 8 reaches here 
+router.post('/mycart', (req, res, next) =>{   
+    console.log(req.body) 
     res.redirect('/') 
 })
 
-module.exports = router // router is being exported
+module.exports = router 
