@@ -13,6 +13,7 @@ const shopRoutes = require('./approutes/shop')
 
 app.use(bodyParser.urlencoded({extended: false})) 
 
+app.use(express.static(path.join(__dirname, 'public'))) //for serving the files statically
 
 app.use('/admin', adminRoutes) 
 
