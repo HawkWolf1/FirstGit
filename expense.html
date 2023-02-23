@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <style>
+            h3{text-align: center;}
+            p{text-align: center;}
+
+        </style>
+        <h3> EXPENSE TRACKER </h3>
+        <body>
+
+        <form onsubmit="saveToLocalStorage(event)">
+        <p> <label>CHOOSE EXPENSE AMOUNT</label>
+            <input id="expense amount" type="number" name="expense_amount" size="50" ><br>
+
+            <label> CHOOSE DESCRIPTION</label>
+            <input id="choose description" type="text" name="choose_description" size="50" ><br>
+
+            <label> CHOOSE CATEGORY </label>
+            <select name="choose_category" id="choose category">
+                <option value = 'fuel'>fuel</option>
+                <option value = 'food'>food</option>
+                <option value = 'vacation'>vacation</option>
+                <option value = 'shopping'>shopping</option>
+            </select>
+
+            <button> SUBMIT </button>
+        </form>
+        </p>
+        <ul id="listOfUsers"> </ul>
+ 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+
+            <script>
+                async function saveToLocalStorage(event){
+                    event.preventDefault()
+                    const amount = document.getElementById('expense amount').value
+                    const description = document.getElementById('choose description').value
+                    const category = document.getElementById('choose category').value
+
+                    // localStorage.setItem('expense_amount', amount)
+                    // localStorage.setItem('choose_description', description)
+                    // localStorage.setItem('choose_category', category)
+
+                    const myObject = {
+                        amount,
+                        description,
+                        category
+                    }
+                    // localStorage.setItem(myObject.description, JSON.stringify(myObject))
+                    try{
+                        const abc = await axios.post("https://localhost:4000/user/add-user", myObject)
+                        showNewUserOnScreen(abc.data)
+                    }
+                        // .then((response) => {
+                    //     showNewUserOnScreen(response.data)
+                    //     // console.log(response)
+                    // })
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
+                    // catch((err) => {
+                    //     document.body.innerHTML = document.body.innerHTML
+                    //     console.log(err)
+                    // })
+
+                    // showNewUserOnScreen(myObject)
+
+                }
+                window.addEventListener("DOMContentLoaded", async(event) => {
+                    event.preventDefault()
+                    try{
+                    const xyz = await axios.get("https://localhost:4000/user/get-users")
+                    console.log(xyz)
+                    for(var i=0; i<xyz.data.length; i++){
+                             showNewUserOnScreen(xyz.data[i])
+                    }
+                }
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
+                    
+                
+                    
+                    
+                    // .then((response) => {
+                    //     // console.log(response)
+
+                    //     for(var i=0; i<response.data.length; i++){
+                    //         showNewUserOnScreen(response.data[i])
+                    //     }
+                    // })
+                    // .catch((err) =>{
+                    //     console.log(err)
+                    // })
+                })
+                
+                    // const localStorageObj = localStorage
+                    // const localStorageKeys = Object.keys(localStorageObj)
+
+                    // for(var i=0; i<localStorageKeys.length; i++){
+                    //     const key = localStorageKeys[i]
+                    //     const UserDetailsString = localStorageObj[key]
+                    //     const userDetailsObj = JSON.parse(UserDetailsString)
+                    //     showNewUserOnScreen(userDetailsObj)
+                    // }
+                // })
+
+
+
+                function showNewUserOnScreen(user){
+                     
+                    document.getElementById('expense amount').value ='';
+                    document.getElementById('choose description').value ='';
+                    document.getElementById('choose category').value =''
+
+                    if(localStorage.getItem(user.description) != null){
+                        removeUserFromScreen(user.description)
+                    }
+
+                    const parentNode= document.getElementById('listOfUsers')
+                    const childHTML = `<li id=${user._id}> ${user.amount} - ${user.description} 
+                                        <button onclick =deleteExpense('${user._id}')> Delete Expense </button>  
+                                        <button onclick =editExpense('${user.description}','${user.amount}','${user.category}','${user._id}')> Edit Expense </button>                                              
+                                        </li>`
+
+                    parentNode.innerHTML = parentNode.innerHTML + childHTML
+                }
+                function editExpense(choose_description, expense_amount, choose_category, userId){
+                    document.getElementById('choose description').value = choose_description
+                    document.getElementById('expense amount').value = expense_amount
+                    document.getElementById('choose category').value = choose_category
+
+                    deleteExpense(userId)
+                }
+                async function deleteExpense(userId){
+                    try {const pqr = await axios.delete(`"https://localhost:4000/user/delete-user"/${userId}`)
+                    removeUserFromScreen(userId)
+                    }
+                    catch(err){
+                        console.log("Error Block: ",err)
+                    }
+                }
+                    // .then((response) => {
+                    //     removeUserFromScreen(userId)
+                    // })
+                    // .catch((err) => {
+                    //     console.log(err)
+                    // })
+                
+                    // console.log(choose_description)
+                    // localStorage.removeItem(choose_description)
+                    // removeUserFromScreen(choose_description)
+                // }
+                function removeUserFromScreen(userId){
+                    const parentNode = document.getElementById('listOfUsers')
+                    const childNodeToBeDeleted = document.getElementById(userId)
+
+                    parentNode.removeChild(childNodeToBeDeleted)
+                }
+                
+                    
+                
+             </script>
+        
+        </body>
+    </head>
+</html>
